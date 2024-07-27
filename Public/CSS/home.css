@@ -1,0 +1,82 @@
+body{
+    font-family: "Poppins", sans-serif;
+}
+
+nav {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.banner-image {
+    height: 40vh;
+}
+
+/* #F9B617 */
+
+.highlights {
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+/* cards */
+
+.info {
+    margin-top: 60px;
+}
+
+
+.card {
+    text-decoration: none;
+    background-color: #222;
+    width: 20rem;
+    border-radius: 12px;
+    padding-top: 20px;
+}
+.card-img {
+    width: 40%;
+}
+
+.students {
+    background-color: #054976;
+
+}
+
+.teachers {
+    background-color: #033e65;
+}
+
+.departments {
+    background-color: #022b47;
+}
+
+.display-8 {
+    font-size: 2rem;
+    font-weight: 200;
+}
+
+
+/***/
+
+
+@media (max-width: 1400px) {
+    .banner-image {
+        height: 38vh;
+    }
+}
+
+@media (max-width: 1000px) {
+    .container,.row {
+        flex-direction: column;
+    }
+
+    .home-banner, .highlights {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .banner-image {
+        height: 28vh;
+    }
+}
