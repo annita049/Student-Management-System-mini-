@@ -32,19 +32,19 @@ nav {
     padding-top: 20px;
 }
 .card-img {
-    width: 40%;
+    width: 27%;
 }
 
-.students {
+.card-students {
     background-color: #054976;
 
 }
 
-.teachers {
+.card-teachers {
     background-color: #033e65;
 }
 
-.departments {
+.card-departments {
     background-color: #022b47;
 }
 
