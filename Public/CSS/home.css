@@ -6,16 +6,47 @@ nav {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+.navbar a {
+    text-align: center;
+}
+.fa-bars-staggered {
+    font-size: 25px;
+    color: #333;
+}
+
+.navbar-toggler {
+    outline: none !important;
+}
+
+.nav-link {
+    position: relative;
+}
+
+.nav-link::before {
+    content: '';
+    background:  #215272;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.nav-link:hover::before
+{
+    opacity: 0.4 !important;
+} 
+
 .banner-image {
-    height: 40vh;
+    width: 50vw;
+    margin-left: -20px;
 }
 
 /* #F9B617 */
 
-.highlights {
-    background-color: transparent;
-    border-radius: 10px;
-}
 
 /* cards */
 
@@ -25,58 +56,40 @@ nav {
 
 
 .card {
+    min-height: 150px;
     text-decoration: none;
     background-color: #222;
-    width: 20rem;
+    /* width: 20rem; */
     border-radius: 12px;
-    padding-top: 20px;
+    padding: 10px 0;
 }
 .card-img {
-    width: 27%;
+    width: 25%;
 }
 
 .card-students {
-    background-color: #054976;
+    background-color: #2c6388;
 
 }
 
 .card-teachers {
-    background-color: #033e65;
+    background-color: #0d4469;
 }
 
 .card-departments {
-    background-color: #022b47;
+    background-color: #09314c;
 }
 
 .display-8 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 200;
 }
 
 
-/***/
+/** media query **/
 
-
-@media (max-width: 1400px) {
+@media (max-width: 991px) {
     .banner-image {
-        height: 38vh;
-    }
-}
-
-@media (max-width: 1000px) {
-    .container,.row {
-        flex-direction: column;
-    }
-
-    .home-banner, .highlights {
         width: 100%;
-        margin-top: 20px;
-    }
-}
-
-@media (max-width: 700px) {
-
-    .banner-image {
-        height: 28vh;
     }
 }
