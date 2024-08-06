@@ -1,0 +1,255 @@
+<div class="container">
+    <div class="h1 my-5">Student Records</div>  
+    <a href="/add" class="btn btn-dark add-btn mt-5">
+        <i class="fa-solid fa-user-plus"></i>
+        Add student
+    </a>     
+    <table class="table table-hover mt-3">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>CGPA</th>
+          <th>Department</th>
+          <th width="170px">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% for(let i=0; i<students.length; i++){ %>
+        <% const student = students[i]; %>
+        <% const cgpa = student.cgpa.toFixed(2); %>
+            <tr>
+                <td><%=student.id %></td>
+                <td><%=student.name %></td>
+                <td><%=cgpa %></td>
+                <td><%=student.department %></td>
+                <td class="action-buttons">
+                        <!-- <%=student.name %> -->
+                        
+                    <div class="view-button">
+                        <a href="/view/<%=student._id%>" class="btn btn-sm view-btn btn-primary me-2" >View</a>
+                    </div>
+
+                    <div class="modify-buttons">
+                        <a type="button" class="btn" onclick="EditStudentInfo('<%=student._id%>')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa-solid fa-pencil fs-5 text-success"></i>
+                        </a>
+                        
+                        <a type="button" onclick="DeleteStudentInfo('<%=student._id%>')" class="btn">
+                            <i class="fa-solid fa-trash-can fs-5 text-danger"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        <% } %>
+      </tbody>
+    </table>
+</div>
+
+
+<!-- modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Student Info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm" action="/edit" method="POST">
+                    <input type="hidden" value="" name="_id" id="_id">
+                    <div class="mb-3">
+                        <label for="id" class="col-form-label">ID:</label>
+                        <input type="text" class="form-control" id="id" value="" name="id">
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" value="" id="name" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="cgpa" class="col-form-label">CGPA:</label>
+                        <input type="text" class="form-control" id="cgpa" value="" name="cgpa">
+                    </div>
+                    <div class="mb-3">
+                        <label for="department" class="col-sm-2 col-form-label">Department</label>
+                        <select required class="form-select form-control" id="department" value="" name="department">
+                            <option value="ICT">ICT</option>
+                            <option value="CSE">CSE</option>
+                            <option value="TE">TE</option>
+                            <option value="ME">ME</option>
+                        </select>
+                    </div>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> -->
+                    <input type="submit" class="btn btn-dark" onclick="SubmitForm()" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function DeleteStudentInfo(obj_id){ //obejct unique id
+        if(confirm('Are you sure to delete student ID: ' + obj_id + ' ?')){
+            $.post("/delete", {obj_id}, function (res){ 
+                console.log(res);
+                if(res.success){
+                    location.reload();
+                }
+            });
+        }
+    }
+
+    document.querySelector('#name').value = "shob sb";
+
+    let _id ;
+
+    function EditStudentInfo(obj_id){
+        _id = obj_id;
+        $.get('/edit/' + obj_id, (res)=> {
+            $('#id').val(res.id);
+            $('#name').val(res.name);
+            $('#cgpa').val(res.cgpa);
+            $('#department').val(res.department);
+            console.log(res);
+            // console.log(_id);
+        });
+    }
+    // const 
+
+    function SubmitForm(){
+        const form = document.querySelector('#modalForm');
+        const formData = new FormData(form);
+        $('#_id').val(_id);
+
+        form.submit();
+
+    }
+
+
+    function AddStudent(){
+        
+    }
+
+
+    const actionButtons = document.querySelectorAll('.action-buttons');
+
+    // actionButtons.forEach(it =>{
+    //     console.log(it.textContent);
+    // });
+
+    // const modButtons  = document.querySelector('.modify-buttons')
+    // console.log(modButtons);
+
+
+    // $('.modify-buttons').hover(
+
+    //     function() {
+    //         // Function to execute on mouseenter (hover in)
+    //         // $(this).css('background-color', 'blue'); // Example: change background color
+    //         $(this).css('display', 'inline-block');
+    //     },
+    //     function() {
+    //         $(this).css('display', 'none');
+    //     }
+    // )
+
+    // $.post('/edit', formData, (response)=>{
+    //     if(response.success){
+    //         alert("Data sent successfully!");
+    //         ("#exampleModal").modal('hide');
+    //     }
+    //     else {
+    //         alert("kisu paros na :(");
+    //     }
+    // })
+
+    // document.getElementById('modalForm').addEventListener('submit', async function(event) {
+    //     event.preventDefault();
+    //     const form = event.target;
+    //     const formData = new FormData(form);
+        
+    //     formData.set('_id',_id);
+
+    //     $.ajax({
+    //     url: '/edit',
+    //     type: 'POST',
+    //     data: formData,
+    //     processData: false,  // Important
+    //     contentType: false,  // Important
+    //     success: function(res) {
+    //         if (res.success) {
+    //             alert("Data updated successfully!");
+    //             location.reload();
+    //         }
+    //         else {
+    //             alert("Error updating data successfully!");
+    //         }
+    //     });
+
+    // });
+
+    //---------------------------------------
+
+
+
+    // const editButton = document.getElementById('editButton');
+    // console.log(editButton);
+    // const modal = document.querySelector('exampleModal')
+    // console.log(modal);
+
+
+    // // const modalForm = document.querySelector('#modalForm');
+    // editButton.addEventListener('onclick', event =>{
+    //     event.preventDefault();
+    //     const _id = event.target.dataset.objid;
+    //     const id = event.target.dataset.objid;
+    //     const name = event.target.dataset.objid;
+    //     const cgpa = event.target.dataset.objid;
+    //     const department = event.target.dataset.objid;
+    //     console.log(cgpa);
+    //     console.log(event);
+
+    //     $('#id').val(id);
+    //     $('#name').val(name);
+    //     $('#cgpa').val(cgpa);
+    //     $('#dept').val(dept);
+
+    //     const modalForm = document.querySelector('#modalForm');
+    //     console.log(modalForm);
+    //     // const formData = {
+    //     //     id: $('#id').val(),
+    //     //     name: $('#name').val(),
+    //     //     cgpa: $('#cgpa').val(),
+    //     //     department: $('#department').val()
+    //     // }
+    // });
+
+
+
+        // $.ajax({
+        //     type: 'PUT',
+        //     url: '/edit/',
+        //     data: JSON.stringify(formData),
+        //     contentType: 'application/json',
+        //     success: function(response) {
+        //         if (response.success) {
+                    //  alert('Failed to update data.');
+        //             console.log("Data Updated!");
+        //         } else {
+        //             alert('Failed to update data.'); // Show failure message
+        //         }
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error('Error sending data:', error); // Log the error
+        //     }
+        // });
+    // });
+
+
+
+    ///-----------------------------------
+    
+
+</script>

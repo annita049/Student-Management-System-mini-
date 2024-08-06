@@ -1,0 +1,63 @@
+
+    <!-- banner with image -->
+    <div class="banner container mt-4 mb-2">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6 col-md-12 col-sm-12">
+                <img class=" banner-image" src="Images/banner1.png" alt="banner">
+            </div>
+            <div class="col-12 col-lg-6 col-md-12 col-sm-12 mt-5 p-4">
+                <h1 class="display-5">University Management</h1>
+                <p class="lead mt-4">Keeps Students and Teachers Record of the Engineering Faculty and Shows necessary analysis of the records. Lorem ipsum dolor sit amet.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info showing in card layouts -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-9 col-xl-3 col-lg-4 col-md-6 col-sm-10 mb-3 g-5">
+                <div style="--Bcolor: #4E9BD1; --scolor: #c6dcec;" class="card">
+                    <img src="icons/students-icon.png" class="card-img m-auto" alt="...">
+                    <p class="display-8 p-1 text-center text-dark"> <span id="tot_students">0</span> Students</p>
+                </div>
+            </div>
+            <div class="col-9 col-xl-3 col-lg-4 col-md-6 col-sm-10 mb-3 g-5">
+                <div style="--Bcolor: #d38050; --scolor: #e4c3af;" class="card card-teachers">
+                    <img src="icons/teachers-icon.png" class="card-img m-auto" alt="...">
+                    <p class="display-8 p-1 text-center text-dark"> <span id="tot_teachers">0</span> Teachers</p>
+                </div>
+            </div>
+            <div class="col-9 col-xl-3 col-lg-4 col-md-6 col-sm-10 mb-3 g-5">
+                <div style="--Bcolor: #1D3D8D; --scolor: #a3b1d3;" class="card card-departments">
+                    <img src="icons/departments-icon.png" class="card-img m-auto" alt="...">
+                    <p class="display-8 p-1 text-center text-dark"> <span id="tot_departments">4 </span> Departments</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // number auto incremental animation
+        function autoIncrement(elementId, step, interval, stop) {
+            let i = 0;
+            const intervalId = setInterval(function() {
+                    let element = document.getElementById(elementId);
+                    if (i + step < stop){
+                        i+= step;
+                        element.innerText = i;
+                    }
+                    else {
+                        clearInterval(intervalId); 
+                        element.innerText = stop;
+                    }
+                }, interval);
+                console.log(intervalId);         
+        }
+
+        autoIncrement('tot_students', 15, 100, 157);
+        autoIncrement('tot_teachers', 1, 80, 11);
+        // autoIncrement('tot_departments', 1, 300, 4);
+    </script>
+
+</body>
+</html>

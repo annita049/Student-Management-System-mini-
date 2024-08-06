@@ -1,0 +1,40 @@
+<div class="container mt-5">
+    <div class="h1">Students Form</div>
+    <form action="/add" method="POST">
+        <div class="mb-3 row">
+            <label for="id" class="col-sm-2 col-form-label">ID</label>
+            <div class="col-sm-5">
+                <input required type="text" class="form-control" id="id" name="id" placeholder="Enter your ID">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="name" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-5">
+                <input required type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="cgpa" class="col-sm-2 col-form-label">CGPA</label>
+            <div class="col-sm-5">
+                <input required type="number" min="0.00" max="4.00" step="0.01" class="form-control" id="cgpa" name="cgpa" placeholder="Enter your CGPA">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="department" class="col-sm-2 col-form-label">Department</label>
+            <div class="col-sm-5">
+                <select required class="form-select" id="department" name="department">
+                    <!-- <option selected>Choose Student Department</option> -->
+                    <option value="ICT">ICT</option>
+                    <option value="CSE">CSE</option>
+                    <option value="TE">TE</option>
+                    <option value="ME">ME</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-sm-10 offset-sm-2">
+                <input type="submit" value="submit" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+</div>

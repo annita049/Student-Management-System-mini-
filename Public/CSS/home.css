@@ -8,16 +8,22 @@ nav {
 
 .navbar a {
     text-align: center;
+    padding: 5px 20px !important;
 }
+
 .fa-bars-staggered {
     font-size: 25px;
     color: #333;
 }
 
-.navbar-toggler {
+/* .navbar-toggler {
     outline: none !important;
-}
+} */
 
+.navbar-toggler {
+    color: transparent !important;
+    border: none !important;
+}
 .nav-link {
     position: relative;
 }
@@ -35,7 +41,8 @@ nav {
     transition: opacity 0.5s ease;
 }
 
-.nav-link:hover::before
+.nav-link:hover::before,
+.nav-link.active::before
 {
     opacity: 0.4 !important;
 } 
@@ -58,26 +65,30 @@ nav {
 .card {
     min-height: 150px;
     text-decoration: none;
-    background-color: #222;
+    background-color: var(--scolor);
+    border: 1px solid var(--Bcolor);
     /* width: 20rem; */
     border-radius: 12px;
     padding: 10px 0;
+    position: relative;
+    /* overflow: hidden; */
 }
+
+.card::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    top: 5%;
+    left: 2%;
+    background-color:  var(--Bcolor);
+    z-index: -1;
+}
+
 .card-img {
     width: 25%;
-}
-
-.card-students {
-    background-color: #2c6388;
-
-}
-
-.card-teachers {
-    background-color: #0d4469;
-}
-
-.card-departments {
-    background-color: #09314c;
+    filter: drop-shadow(5px 5px 5px rgba(18, 18, 18, 0.30));
 }
 
 .display-8 {
@@ -85,6 +96,116 @@ nav {
     font-weight: 200;
 }
 
+/* ----- modal styles ----- */
+
+/* add student button */
+.add-btn {
+    height: 45px;
+    width: 200px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    /* position: relative; */
+    text-align: end;
+    vertical-align: middle;
+    padding-right: 20px;
+    font-size: 18px;
+    text-decoration: none;
+    border: 2px solid #222;
+}
+
+
+.fa-user-plus {
+    /* position: absolute; */
+    font-size: large;
+    margin: 0 5px;
+    margin-right: 12px;
+    /* color: #000; */
+}
+
+
+/* Data Table Styling */
+.table {
+    background-color: #e9eff2;
+    /* background-color: #B8C8D3; */
+    text-align: center;
+    vertical-align: middle;
+}
+
+thead tr {
+    background-color: #1b699e;
+    color: #eee;
+}
+/* .action-buttons {
+} */
+th {
+    padding: 10px 0 !important;
+}
+
+td {
+    padding: 10px 0 !important;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 10px !important;
+    min-width: 100px !important;
+    max-width: 200px !important;
+}
+
+.modify-buttons {
+    /* visibility: hidden; */
+    opacity: 0;
+    transition: 5000ms;
+    /* transition: visibility 0; */
+    transition: opacity 0.3s ease-in;
+}
+
+.action-buttons:hover .modify-buttons{
+    /* visibility: visible; */
+    opacity: 1;
+}
+
+/* @keyframes dancingButtons {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+} */
+
+@keyframes dance {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    33% {
+        transform: translateY(-3px);
+    }
+    66% {
+        transform: translateY(3px);
+    }
+}
+
+.view-btn {
+    transition: scale(1.01) 0.3s ease-in;
+    background-color: #2F85D3;
+    border: 2px solid #2F85D3;
+    color: #eee;
+    font-weight: 500;
+    /* animation: dance 0.7s ease infinite; */
+}
+.view-btn:hover {
+    transform: scale(1.05);
+}
+.fa-solid {
+    padding: 0 !important;
+}
 
 /** media query **/
 
