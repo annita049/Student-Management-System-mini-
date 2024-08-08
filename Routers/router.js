@@ -80,14 +80,13 @@ router.post('/edit', async(req, res)=>{
 
     try {
 
-        // if(!_id) res.status(500).json({success: false})
         response = await Student.updateOne(
             {_id: _id},
             {$set: {id, name, cgpa, department}}
         );
 
         // res.status(200).json({success: true});
-        // if(response.matchedCount) res.status(200).json({success: true});
+        if(!response.matchedCount) res.status(200).send("<h1>No Match Found!</h1>");
         // res.send(response);
         res.redirect('/students');
     }
@@ -97,5 +96,25 @@ router.post('/edit', async(req, res)=>{
     }
 });
 
+// --- implementing search method ---
+
+
+router.get('/search', async (req, res)=>{
+    const query = req.query;
+
+    try {
+        // res.json(query);
+        const students = await Student.find(query);
+        // res.status(200).render('layout',{
+        //     title: 'Search Students',
+        //     body: 'pages/search_result',
+        //     students: students
+        // });        
+        res.status(200).json(students);
+    }
+    catch(err){
+        res.status(404).send("Not found!");
+    }
+});
 
 module.exports = router;

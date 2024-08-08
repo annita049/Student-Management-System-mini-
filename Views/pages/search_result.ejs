@@ -7,12 +7,12 @@
         </a>
         <form action="/search" method="post" id="search-form">
             <div class="search-box">
-                <select class="dropdown-toggler" id="key" name="key">
-                    <option value="id">ID</option>
-                    <option value="name">Name</option>
-                    <option value="department">Department</option>
-                    <option value="home">Home</option>
-                </select>
+                    <select class="dropdown-toggler" id="key" name="key">
+                        <option value="id">ID</option>
+                        <option value="name">Name</option>
+                        <option value="department">Department</option>
+                        <option value="home">Home</option>
+                    </select>
                 <div class="search-field">
                     <input type="text" id="search-value" name="value" placeholder="search . . .">
                     <button type="submit" id="search-submit">
@@ -22,13 +22,6 @@
             </div>
         </form>
     </div>
-
-    <!-- in case of no data -->
-     <div class="no-data">
-        <img src="Images/no-record-found.png" alt="No data found">
-     </div>
-
-    <!-- student data table -->
     <table class="table table-hover mt-3">
       <thead>
         <tr>
@@ -36,10 +29,10 @@
           <th>Name</th>
           <th>CGPA</th>
           <th>Department</th>
-          <th id="actions" width="170px">Actions</th>
+          <th width="170px">Actions</th>
         </tr>
       </thead>
-      <tbody id="table-body">
+      <tbody>
 
         <% for(let i=0; i<students.length; i++){ %>
         <% const student = students[i]; %>
@@ -49,9 +42,9 @@
                 <td><%=student.name %></td>
                 <td><%=cgpa %></td>
                 <td><%=student.department %></td>
-
-                <!-- action buttons -->
-                <td class="action-buttons">  
+                <td class="action-buttons">
+                        <!-- <%=student.name %> -->
+                        
                     <div class="view-button">
                         <a href="/view/<%=student._id%>" class="btn btn-sm view-btn btn-primary me-2" >View</a>
                     </div>
@@ -136,9 +129,11 @@
             $('#name').val(res.name);
             $('#cgpa').val(res.cgpa);
             $('#department').val(res.department);
-            // console.log(res);
+            console.log(res);
+            // console.log(_id);
         });
     }
+    // const 
 
     function SubmitForm(){
         const form = document.querySelector('#modalForm');
@@ -147,112 +142,5 @@
         form.submit();
     }
 
-    const dropdownToggle = document.querySelector('.dropdown-toggler'); 
-
-    const searchForm = document.querySelector('#search-form');
-
-    // initilly (before search)
-    document.querySelector('.no-data').style.display = "none";
-
-    searchForm.addEventListener('submit', event =>{
-        event.preventDefault();  // stops the form submission
-        const formData = new FormData(searchForm);
-        // form = $(this).serialize();
-        let arr = [];
-        for (let [key, value] of formData.entries()){
-            // console.log(value);
-            arr.push(value);
-        };
-        const [key, value] = arr;
-        const url = `/search?${key}=${value}`;
-
-        // let params = new URLSearchParams('key1=value1&key2=value2');
-
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: (data)=> {
-                $('.no-data').hide();
-                // console.log(data.length);
-
-                if(!data.length){
-                    $('.table').hide();
-                    $('.no-data').css('display','flex');
-                }
-
-                else {
-                    $('.table').show();
-                    $('#table-body').empty(); 
-
-                    data.forEach(student => {
-                    $('#table-body').append(
-                        `<tr>
-                            <td>${student.id}</td>
-                            <td>${student.name}</td>
-                            <td>${student.cgpa}</td>
-                            <td>${student.department}</td>
-                            <td class="action-buttons">  
-                                <div class="view-button">
-                                    <a href="/view/${student._id}" class="btn btn-sm view-btn btn-primary me-2" >View</a>
-                                </div>
-
-                                <div class="modify-buttons">
-                                    <a type="button" class="btn" onclick="EditStudentInfo('${student._id}')" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        <i class="fa-solid fa-pencil fs-5 text-success"></i>
-                                    </a>
-                                    
-                                    <a type="button" onclick="DeleteStudentInfo('${student._id}')" class="btn">
-                                        <i class="fa-solid fa-trash-can fs-5 text-danger"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>`);
-                    });
-                }
-            },
-            error: (xhr, status, error)=> {
-                console.error('Error:', error);
-            }
-        });
-    });
-
-    // function Search(){
-    //     const formData = new FormData(searchForm);
-    //     console.log(formData);
-
-
-
-        // $.ajax({
-        //     url: '/search',
-        //     type: 'POST',
-        //     body: formData,
-        //     contentType: false, 
-        //     processData: false,
-        //     success: function(data) {
-        //         if(data.success){
-        //             alert("YAYYY!");
-        //         }
-        //         else {
-        //             alert("Bebooo..");
-        //         }
-        //     },
-        //     error: function(jqXHR, textStatus, errorThrown) {
-        //         console.error('There was a problem with the POST request:', textStatus, errorThrown); // Log the error
-        //     }
-    //     });
-
-    //     // console.log("formeheheee");
-    //     // for (let [key, value] of formData.entries()) {
-    //     //         console.log(`${key}: ${value}`);
-    //     // }
-    // };
-
-
-    // actionButtons.forEach(it =>{
-    //     console.log(it.textContent);
-    // });
-
-    // const modButtons  = document.querySelector('.modify-buttons')
-    // console.log(modButtons);
 
 </script>
