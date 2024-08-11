@@ -1,7 +1,11 @@
 <div class="container">
     <div class="h1 display-5 mt-3">Student Records</div>  
     <div class="header-op">
-        <a href="/add" class="btn btn-dark add-btn ">
+        <!-- <a href="/add"class="btn btn-dark add-btn">
+            <i class="fa-solid fa-user-plus"></i>
+            Add student
+        </a> -->
+        <a type="button" onclick="AddStudent('_id')" class="btn btn-dark add-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="fa-solid fa-user-plus"></i>
             Add student
         </a>
@@ -24,9 +28,9 @@
     </div>
 
     <!-- in case of no data -->
-     <div class="no-data">
+    <div class="no-data">
         <img src="Images/no-record-found.png" alt="No data found">
-     </div>
+    </div>
 
     <!-- student data table -->
     <table class="table table-hover mt-3">
@@ -78,34 +82,35 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Student Info</h5>
+                <h5 class="modal-title"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
             </div>
             <div class="modal-body">
-                <form id="modalForm" action="/edit" method="POST">
+                <form id="modalForm" action="" method="POST">
                     <input type="hidden" value="" name="_id" id="_id">
                     <div class="mb-3">
                         <label for="id" class="col-form-label">ID:</label>
-                        <input type="text" class="form-control" id="id" value="" name="id">
+                        <input required type="text" class="form-control" id="id" value="" name="id" placeholder="Enter Student ID">
                     </div>
                     <div class="mb-3">
                         <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" value="" id="name" name="name">
+                        <input required type="text" class="form-control" value="" id="name" name="name" placeholder="Enter Student Name">
                     </div>
                     <div class="mb-3">
                         <label for="cgpa" class="col-form-label">CGPA:</label>
-                        <input type="text" class="form-control" id="cgpa" value="" name="cgpa">
+                        <input required type="number" min="0.00" max="4.00" step="0.01" class="form-control" id="cgpa" name="cgpa" placeholder="Enter Student CGPA">
+                        <!-- <input type="text" class="form-control" id="cgpa" value="" name="cgpa"> -->
                     </div>
                     <div class="mb-3">
                         <label for="department" class="col-sm-2 col-form-label">Department</label>
-                        <select required class="form-select form-control" id="department" value="" name="department">
+                        <select required class="form-select form-control" id="department" value="Choose Student Department" name="department">
                             <option value="ICT">ICT</option>
                             <option value="CSE">CSE</option>
                             <option value="TE">TE</option>
                             <option value="ME">ME</option>
                         </select>
                     </div>
-                    <input type="submit" class="btn btn-dark mt-4 form-submit" onclick="SubmitForm()" value="Save">
+                    <input type="submit" class="btn btn-dark mt-4 form-submit" value="Save">
                 </form>
             </div>
         </div>
@@ -125,12 +130,19 @@
         }
     }
 
-    document.querySelector('#name').value = "shob sb";
+    // document.querySelector('#name').value = "shob sb";
+
+    const modalForm = document.querySelector('#modalForm');
+    const modalTitle = document.querySelector('.modal-title');
+    let editMode = false;
 
     let _id ;
 
     function EditStudentInfo(obj_id){
+        editMode = true;
         _id = obj_id;
+        modalTitle.textContent = "Edit Student Info";
+        // $('.modal-title').text = "Edit Student Info";
         $.get('/edit/' + obj_id, (res)=> {
             $('#id').val(res.id);
             $('#name').val(res.name);
@@ -140,17 +152,33 @@
         });
     }
 
-    function SubmitForm(){
-        const form = document.querySelector('#modalForm');
-        const formData = new FormData(form);
-        $('#_id').val(_id);
-        form.submit();
+    function AddStudent(_id){
+        editMode = false;
+        modalTitle.textContent = "Add new Student";
+        // $('.modal-title').text = "Add new Student";
+        modalForm.reset();
+        // modalForm.action = '/add';
     }
 
-    const dropdownToggle = document.querySelector('.dropdown-toggler'); 
+    modalForm.addEventListener('submit', event=> {
+        event.preventDefault();
 
+        if (editMode){
+            $('#_id').val(_id);
+            modalForm.action = '/edit';
+            modalForm.submit();
+        }
+        else {
+            modalForm.action = '/add';
+            modalForm.submit();
+        }
+    });
+
+    
+    //------------ implementation of search function -------------
+
+    const dropdownToggle = document.querySelector('.dropdown-toggler');
     const searchForm = document.querySelector('#search-form');
-
     // initilly (before search)
     document.querySelector('.no-data').style.display = "none";
 
@@ -172,6 +200,7 @@
             url: url,
             type: 'GET',
             success: (data)=> {
+                console.log(data);
                 $('.no-data').hide();
                 // console.log(data.length);
 

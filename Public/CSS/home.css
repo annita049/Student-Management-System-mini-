@@ -213,6 +213,8 @@ nav {
 }
 
 thead tr {
+    position: sticky;
+    top: 0;
     background-color: #1b699e;
     color: #eee;
 }
@@ -300,6 +302,7 @@ td {
     }
     .add-btn {
         width: 53px;
+        margin-left: 20px;
     }
     .search-box {
         margin: 50px;
