@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();  // router object is an instance of express.Router()
 const Student = require('../Models/student');
+const { body, validationResult } = require('express-validator');
 
 router.get('/home',(req, res)=>{
     res.render('layout',{
@@ -75,9 +76,9 @@ router.get("/edit/:id", async(req, res)=>{
     // });
 });
 
-router.post('/edit', async(req, res)=>{
-    const {_id, id, name, cgpa, department} = req.body;
+router.post('/edit',async(req, res)=>{
 
+    const {_id, id, name, cgpa, department} = req.body;
     try {
 
         response = await Student.updateOne(
@@ -96,20 +97,20 @@ router.post('/edit', async(req, res)=>{
     }
 });
 
+
 // --- implementing search method ---
 
+// ----//--------//------------//-----------------//----------//
 
-router.get('/search', async (req, res)=>{
-    const query = req.query;
+router.get('/search', async (req, res)=> {
+
+    const query = req.query;  // query -> {key: value}
+    const key = Object.keys(query)[0];
 
     try {
-        // res.json(query);
-        const students = await Student.find(query);
-        // res.status(200).render('layout',{
-        //     title: 'Search Students',
-        //     body: 'pages/search_result',
-        //     students: students
-        // });        
+        const students = await Student.find({
+            [key]: {$regex: query[key], $options: 'i'}
+        });     
         res.status(200).json(students);
     }
     catch(err){
